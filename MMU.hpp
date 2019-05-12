@@ -8,11 +8,12 @@ class MemoryManagementUnit{
 public:
 	MemoryManagementUnit();						//Class Constructor
 	void read();								//Read in addresses from text file
-	void checkPageTable(int pageNumber, int offset, BackingStore *bStore, RAM *Memory);						//Check if page number from logical address is in PageTable
+	void checkPageTable(int pageNumber, int offset, BackingStore *bStore, RAM *Memory, bool FIFO);						//Check if page number from logical address is in PageTable
 	void updateTLB(int pageNumber, int frameNumber);
 	void clearTLB();
 	void translateLogical(int address);			//Translate logical address to page number and offset
 	void pageFaults();
+	void ResetFrameCounter();
 	void TLBHits();
 private:
 	PCB PageTable;
