@@ -3,6 +3,7 @@
 #include "MMU.hpp"
 #include "BackingStore.hpp"
 #include "PCB.hpp"
+#include "RAM.hpp"
 
 const int OFFSET_MASK = 0b11111111; 					//8 bits to mask the offset
 const int ADDRESS_MASK = 0b1111111100000000;			//16 bits to mask the address
@@ -24,10 +25,10 @@ int main(){
 		logicalAddress = stoi(line);
 		pageNumber = (logicalAddress & ADDRESS_MASK) >> 8;			//Mask the 16 address bits then shift 8 to get page
 		offset = (logicalAddress & OFFSET_MASK);
-		cout << "Page number: "<< pageNumber << " Offset: " << offset;
+		//cout << "Page number: "<< pageNumber << " Offset: " << offset << endl;
 		MMU.checkPageTable(pageNumber, offset, &backingStore);
-		cin.get();
 	}
 	MMU.pageFaults();
+	MMU.TLBHits();
 	return 0;
 }
