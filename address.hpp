@@ -1,3 +1,4 @@
+#pragma once
 struct address{
 	word frame;
 	word page;
