@@ -1,3 +1,5 @@
+#include "RAM.hpp"
+
 RAM::RAM(){
 
 }

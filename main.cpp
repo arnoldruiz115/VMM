@@ -15,6 +15,7 @@ int main(){
 	cout << "Virtual Memory Manager." << endl;
 	MemoryManagementUnit MMU;
 	BackingStore backingStore;
+	RAM Memory;
 
 	int pageNumber, offset, logicalAddress;
 	string line;
@@ -26,7 +27,7 @@ int main(){
 		pageNumber = (logicalAddress & ADDRESS_MASK) >> 8;			//Mask the 16 address bits then shift 8 to get page
 		offset = (logicalAddress & OFFSET_MASK);
 		//cout << "Page number: "<< pageNumber << " Offset: " << offset << endl;
-		MMU.checkPageTable(pageNumber, offset, &backingStore);
+		MMU.checkPageTable(pageNumber, offset, &backingStore, &Memory);
 	}
 	MMU.pageFaults();
 	MMU.TLBHits();

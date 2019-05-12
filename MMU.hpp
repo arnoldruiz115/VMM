@@ -1,5 +1,6 @@
 #pragma once
 #include "BackingStore.hpp"
+#include "RAM.hpp"
 #include "PCB.hpp"
 #include <vector>
 
@@ -7,8 +8,8 @@ class MemoryManagementUnit{
 public:
 	MemoryManagementUnit();						//Class Constructor
 	void read();								//Read in addresses from text file
-	void checkPageTable(int pageNumber, int offset, BackingStore *bStore);						//Check if page number from logical address is in PageTable
-	void checkTLB(int pageNumber, int frameNumber);
+	void checkPageTable(int pageNumber, int offset, BackingStore *bStore, RAM *Memory);						//Check if page number from logical address is in PageTable
+	void updateTLB(int pageNumber, int frameNumber);
 	void clearTLB();
 	void translateLogical(int address);			//Translate logical address to page number and offset
 	void pageFaults();
