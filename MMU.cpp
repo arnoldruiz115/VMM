@@ -8,31 +8,19 @@ using namespace std;
 
 MemoryManagementUnit::MemoryManagementUnit(){
 	pageTableCounter = 0;
-	OFFSET_MASK = 0b11111111;
-	ADDRESS_MASK = 0b1111111100000000;
+	page_in_faults = 0;
+	openFrameCounter = 0;			//counter to keep track where the next open frame is
 }
 
 void MemoryManagementUnit::read(){
-	string line;
-	int logicalAddress;
-	cout << "Reading from text file." << endl;
-	ifstream textFile("addresses.txt");
-	while(getline(textFile, line)){
-		logicalAddress = stoi(line);
-		translateLogical(logicalAddress);
-		cin.get();
-	}
+
 }
 
-void MemoryManagementUnit::translateLogical(int address){
-	int pageNumber = (address & ADDRESS_MASK) >> 8;			//Mask the 16 address bits then shift 8 to get page
-	int offset = (address & OFFSET_MASK);					//Mask the 8 bits to get offset
-	cout << "Page number: "<< pageNumber << " Offset: " << offset << endl;
-	checkPageTable(pageNumber, offset);
-	//bStore.read(pageNumber, offset);
+void MemoryManagementUnit::pageFaults(){
+	cout << "Page Fault Rate: "<< page_in_faults/10 << "%\n";
 }
 
-void MemoryManagementUnit::checkPageTable(int pageNumber, int offset){
+void MemoryManagementUnit::checkPageTable(int pageNumber, int offset, BackingStore *bStore){
 	int frame = -1;
 	for(int i = 0; i < pageTableCounter; i++){
 		if(PageTable.pageNumbers[i] == pageNumber){
@@ -40,6 +28,14 @@ void MemoryManagementUnit::checkPageTable(int pageNumber, int offset){
 		}
 	}
 	if (frame == -1){
-		bStore.read(pageNumber, offset);
+		bStore->read(pageNumber, offset);
+		PageTable.pageNumbers[pageTableCounter] = pageNumber;
+		PageTable.frameNumbers[pageTableCounter] = openFrameCounter;
+
+		openFrameCounter++;
+		pageTableCounter++;
+		page_in_faults++;						//page was not found so page fault occured.
+		frame = openFrameCounter - 1;
+
 	}
 }

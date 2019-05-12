@@ -20,5 +20,5 @@ void BackingStore::read(int page, int offset){
 		physicalMemory[0][i] = buffer[i];
 	}
 	value = physicalMemory[0][offset];
-	cout << "Value " << value;
+	cout << " Value " << value;
 }
