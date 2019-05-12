@@ -17,10 +17,6 @@ void MemoryManagementUnit::ResetFrameCounter(){
 	openFrameCounter = 0;
 }
 
-void MemoryManagementUnit::read(){
-
-}
-
 void MemoryManagementUnit::pageFaults(){
 	cout << "Page Fault Rate: "<< page_in_faults/10 << "%\n";
 }
@@ -51,11 +47,6 @@ void MemoryManagementUnit::checkPageTable(int pageNumber, int offset, BackingSto
 		PageTable.pageNumbers[pageTableCounter] = pageNumber;
 		PageTable.frameNumbers[pageTableCounter] = openFrameCounter;
 		openFrameCounter++;
-
-		//FIFO
-
-		//LRU
-
 		pageTableCounter++;
 		page_in_faults++;						//page was not found so page fault occured.
 		frameNumber = openFrameCounter - 1;

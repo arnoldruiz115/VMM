@@ -1,0 +1,8 @@
+Virtual Memory Manager.
+Choose page replacement algorithm:
+1: FIFO
+2: LRU
+LRU Chosen.
+Reading from text file.
+Page Fault Rate: 24.4%
+TLB Hit Rate: 5.4%

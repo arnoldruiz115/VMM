@@ -6,15 +6,15 @@
 #include "RAM.hpp"
 #include "PageReplacementAlg.hpp"
 
-const int OFFSET_MASK = 0b11111111; 					//8 bits to mask the offset
-const int ADDRESS_MASK = 0b1111111100000000;			//16 bits to mask the address
+const int OFFSET_MASK = 0b11111111; 											//8 bits to mask the offset
+const int ADDRESS_MASK = 0b1111111100000000;									//16 bits to mask the address
 
 int choice;
 bool FIFO;
 
 using namespace std;
 
-int main(){
+int main(int argc, char *argv[]){
 
 	MemoryManagementUnit MMU;
 	BackingStore backingStore;
@@ -36,10 +36,10 @@ int main(){
 	string line;
 
 	cout << "Reading from text file." << endl;
-	ifstream textFile("addresses.txt");
+	ifstream textFile(argv[1]);
 	while(getline(textFile, line)){
 		logicalAddress = stoi(line);
-		pageNumber = (logicalAddress & ADDRESS_MASK) >> 8;			//Mask the 16 address bits then shift 8 to get page
+		pageNumber = (logicalAddress & ADDRESS_MASK) >> 8;						//Mask the 16 address bits then shift 8 to get page
 		offset = (logicalAddress & OFFSET_MASK);
 		//cout << "Page number: "<< pageNumber << " Offset: " << offset << endl;
 		MMU.checkPageTable(pageNumber, offset, &backingStore, &Memory, FIFO);
